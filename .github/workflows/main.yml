@@ -57,8 +57,10 @@ jobs:
 
       - name: Connect to ProtonVPN
         run: |
-          # Write the VPN configuration to a file
-          echo "${{ secrets.VPN_CONFIG }}" > config.ovpn
+          # Write the VPN configuration to a file using a multi-line string
+          cat <<EOF > config.ovpn
+          ${{ secrets.VPN_CONFIG }}
+          EOF
 
           # Debug: Print the content of the .ovpn file
           echo "Content of config.ovpn:"

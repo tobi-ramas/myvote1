@@ -101,17 +101,26 @@ finally:
 import socket
 
 def get_ip_addresses():
-    # Get the local machine name
-    host_name = socket.gethostname()
+    try:
+        # Get the local machine name (hostname)
+        host_name = socket.gethostname()
 
-    # Get the IPv4 and IPv6 addresses associated with the machine
-    ipv4_address = socket.gethostbyname(host_name)
-    ipv6_addresses = socket.getaddrinfo(host_name, None, socket.AF_INET6)
+        # Get the IPv4 address of the machine
+        ipv4_address = socket.gethostbyname(host_name)
+        print("\nIPv4 Address:", ipv4_address)
 
-    # Display the results
-    print("\nIPv4 Address:", ipv4_address)
-    print("IPv6 Addresses:")
-    for info in ipv6_addresses:
-        print(info[4][0])
+        # Get the IPv6 addresses, but handle the case where the system may not have IPv6 support
+        ipv6_addresses = []
+        try:
+            addr_info = socket.getaddrinfo(host_name, None, socket.AF_INET6)
+            for info in addr_info:
+                ipv6_addresses.append(info[4][0])
+            print("IPv6 Addresses:", ipv6_addresses)
+        except socket.gaierror:
+            print("No IPv6 addresses found or supported in this environment.")
+
+    except socket.gaierror as e:
+        print("Error: Could not resolve hostname. Check your network connection or DNS settings.")
+        print(f"Details: {e}")
 
 get_ip_addresses()

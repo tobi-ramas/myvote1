@@ -2,7 +2,7 @@ name: Auto Vote
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Runs every 31 minutes
+    - cron: '*/3 * * * *'  # Runs every 31 minutes
   workflow_dispatch:  # Allows manual triggering
 
 jobs:

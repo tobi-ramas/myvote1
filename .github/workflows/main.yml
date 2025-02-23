@@ -74,4 +74,4 @@ jobs:
 
       - name: Disconnect VPN
         run: |
-          sudo pkill openvpn
+          sudo pkill openvpn || true  # Ignore errors if no OpenVPN process is running

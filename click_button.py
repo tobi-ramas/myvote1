@@ -18,10 +18,7 @@ user_data_dir = f"/tmp/chrome-user-data-{uuid.uuid4()}"
 options.add_argument(f'--user-data-dir={user_data_dir}')
 
 # Set the User-Agent to mimic a mobile device (e.g., Chrome on Android)
-mobile_user_agent = (
-    "Mozilla/5.0 (Linux; Android 10; Pixel 3) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36"
-)
+mobile_user_agent = "Mozilla/5.0 (Linux; Android 11; SM-G991B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36"
 options.add_argument(f'user-agent={mobile_user_agent}')
 
 # Set mobile emulation options

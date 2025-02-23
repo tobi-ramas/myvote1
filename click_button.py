@@ -96,3 +96,22 @@ finally:
     # Clean up the user data directory
     if os.path.exists(user_data_dir):
         os.system(f"rm -rf {user_data_dir}")
+
+
+import socket
+
+def get_ip_addresses():
+    # Get the local machine name
+    host_name = socket.gethostname()
+
+    # Get the IPv4 and IPv6 addresses associated with the machine
+    ipv4_address = socket.gethostbyname(host_name)
+    ipv6_addresses = socket.getaddrinfo(host_name, None, socket.AF_INET6)
+
+    # Display the results
+    print("\nIPv4 Address:", ipv4_address)
+    print("IPv6 Addresses:")
+    for info in ipv6_addresses:
+        print(info[4][0])
+
+get_ip_addresses()

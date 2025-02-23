@@ -2,7 +2,7 @@ name: Auto Vote
 
 on:
   schedule:
-    - cron: '*/3 * * * *'  # Runs every 31 minutes
+    - cron: '*/3 * * * *'  # Runs every 3 minutes
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
@@ -50,6 +50,31 @@ jobs:
           # Verify ChromeDriver installation
           chromedriver --version
 
+      - name: Install OpenVPN
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openvpn
+
+      - name: Connect to ProtonVPN
+        run: |
+          # Write the VPN configuration to a file
+          echo "${{ secrets.VPN_CONFIG }}" > config.ovpn
+
+          # Write VPN credentials to a file
+          echo "${{ secrets.VPN_USERNAME }}" > auth.txt
+          echo "${{ secrets.VPN_PASSWORD }}" >> auth.txt
+
+          # Connect to the VPN
+          sudo openvpn --config config.ovpn --auth-user-pass auth.txt --daemon
+          sleep 10  # Wait for the VPN connection to establish
+
+          # Verify the VPN connection
+          curl ifconfig.me  # Print the public IP address
+
       - name: Run the vote script
         run: |
           python click_button.py
+
+      - name: Disconnect VPN
+        run: |
+          sudo pkill openvpn

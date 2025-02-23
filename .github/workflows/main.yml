@@ -60,6 +60,10 @@ jobs:
           # Write the VPN configuration to a file
           echo "${{ secrets.VPN_CONFIG }}" > config.ovpn
 
+          # Debug: Print the content of the .ovpn file
+          echo "Content of config.ovpn:"
+          cat config.ovpn
+
           # Write VPN credentials to a file
           echo "${{ secrets.VPN_USERNAME }}" > auth.txt
           echo "${{ secrets.VPN_PASSWORD }}" >> auth.txt
